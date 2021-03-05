@@ -164,7 +164,7 @@ app.post("/upload", (req, res, next) => {
   const randomChoice = randomChoices[~~(randomChoices.length * Math.random())];
   let embed;
   if (req.query.embed === "yes") {
-    if (!req.get("Content-Type").startsWith("image/")) return res.status(400).json({success: false, error: "Cannot embed a non-image upload!"});
+    if (!req.file.mimetype.startsWith("image/")) return res.status(400).json({success: false, error: "Cannot embed a non-image upload!"});
     embed = {
       color: 0xFFFFFF,
       text: config.uploading.name
