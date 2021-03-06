@@ -97,7 +97,7 @@ if (config.http.https) {
 }
 
 app.use((req, res, next) => {
-  if (req.url.split("/").includes("..")) return res.status(400).send({error: "Bad request"});
+  if (req.url.split("/").includes("..")) return res.status(400).send({success: false, error: "Bad request"});
   if (path.extname(req.url)) res.set("X-Robots-Tag", "noindex");
   next();
 });
