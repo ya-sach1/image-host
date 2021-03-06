@@ -25,7 +25,8 @@ module.exports = {
             cert: "cert/fullchain.pem",
             port: 443
         },
-        port: 80
+        port: 80,
+        trustProxy: true // if you're running this behind a reverse proxy, you should set this to true
     },
     name: "Dapper Image Host"
 };

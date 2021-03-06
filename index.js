@@ -85,6 +85,10 @@ app.use(helmet({
   contentSecurityPolicy: false
 }));
 
+if (config.http.trustProxy) {
+  app.enable("trust proxy");
+}
+
 if (config.http.https) {
   app.use((req, res, next) => {
     if (!req.secure) return res.redirect(`https://${req.hostname}:${config.http.https.port}${req.url}`);
