@@ -16,7 +16,8 @@ module.exports = (env, argv) => ({
 
     output: {
         path: path.resolve(__dirname, "../web"),
-        filename: "main.js"
+        filename: "main.js",
+        assetModuleFilename: "[name].[hash][ext]"
     },
 
     module: {
@@ -57,17 +58,13 @@ module.exports = (env, argv) => ({
                 ]
             },
             {
-                test: /\.(?:png|gif|ico|jpe?g|webp|avif|svg)$/i,
-                use: {
-                    loader: "url-loader",
-                    options: {
-                        limit: 4096
+                test: /\.(?:png|gif|ico|jpe?g|webp|avif|svg|mp4|webm|mkv)$/i,
+                type: "asset",
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 4096
                     }
                 }
-            },
-            {
-                test: /\.txt$/i,
-                use: "file-loader"
             }
         ].concat(argv.mode === "production" ? [
                 {
