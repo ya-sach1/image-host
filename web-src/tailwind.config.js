@@ -3,9 +3,9 @@ const colors = require("tailwindcss/colors");
 module.exports = {
     theme: {
         colors: {
-            midnight: "#1F1F3F",
-            twilight: "#3F3F7F",
-            noon: "#C7C7FF",
+            midnight: "#17172F",
+            twilight: "#1F1F3F",
+            noon: "#E7E7FF",
             ...colors
         },
         fontFamily: {
