@@ -16,6 +16,15 @@ body {
     }
 }
 
+.responsive-image img {
+    max-height: 50vh;
+    @apply md:max-h-screen
+}
+
+.subtitle {
+    @apply text-3xl md:text-5xl;
+}
+
 .gradient-bg {
     @apply bg-gradient-to-r from-amber-500 via-red-300 to-purple-500;
 }
