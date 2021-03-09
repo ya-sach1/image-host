@@ -15,10 +15,18 @@ module.exports = (env, argv) => ({
     entry: "./src/main.js",
 
     output: {
-        path: path.resolve(__dirname, "../web"),
-        filename: "main.js",
-        assetModuleFilename: "[name].[hash][ext]"
+        path: path.resolve("../web"),
+        clean: true,
+
+        filename: "[name].[chunkhash].js",
+        chunkFilename: "[id].[chunkhash].js",
+        assetModuleFilename: "[name].[chunkhash][ext]",
+
+        hashDigestLength: 12,
+        hashFunction: "sha256"
     },
+
+    devtool: argv.mode === "production" ? false : "eval-cheap-module-source-map",
 
     module: {
         rules: [
@@ -67,22 +75,22 @@ module.exports = (env, argv) => ({
                 }
             }
         ].concat(argv.mode === "production" ? [
-                {
-                    test: /\.[mc]?js$/i,
-                    exclude: /node_modules/,
-                    use: {
-                        loader: "babel-loader",
-                        options: {
-                            presets: [
-                                ["@babel/preset-env", {useBuiltIns: "entry", corejs: 3}]
-                            ],
-                            plugins: [
-                                "@babel/plugin-syntax-dynamic-import"
-                            ]
-                        }
+            {
+                test: /\.[mc]?[jt]sx?$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            ["@babel/preset-env", {useBuiltIns: "entry", corejs: 3}]
+                        ],
+                        plugins: [
+                            "@babel/plugin-syntax-dynamic-import"
+                        ]
                     }
                 }
-            ] : [])
+            }
+        ] : [])
     },
     plugins: glob.sync("src/**/index.html").map(f =>
         new HtmlPlugin(Object.assign({
@@ -94,13 +102,25 @@ module.exports = (env, argv) => ({
                 author: require("./package.json").author,
                 viewport: "width=device-width, initial-scale=1.0"
             },
-            hash: argv.mode === "production"
+            hash: false,
+            minify: argv.mode === "production" ? {
+                removeAttributeQuotes: true,
+                removeComments: true,
+                useShortDoctype: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                collapseWhitespace: true,
+                conservativeCollapse: true
+            } : false
         }, favicon === null ? {} : {favicon}))
     ).concat([
         new VueLoaderPlugin()
     ]).concat(argv.mode === "production" ? [
         new PreloadPlugin(),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin({
+            filename: "[name].[chunkhash].css"
+        })
     ] : []),
 
     optimization: {

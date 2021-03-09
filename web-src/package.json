@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --mode=development --https --hot",
-    "build": "webpack build --mode=production"
+    "dev": "webpack serve --mode=development --https --hot --progress",
+    "build": "webpack build --mode=production --progress"
   },
   "keywords": [],
   "author": "dapper#0666",
