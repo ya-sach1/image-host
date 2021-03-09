@@ -1,8 +1,8 @@
 const {VueLoaderPlugin} = require("vue-loader");
 const HtmlPlugin = require("html-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const PreloadPlugin = require("@vue/preload-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const {HotModuleReplacementPlugin} = require("webpack");
 
 const path = require("path");
 const purgecss = require("@fullhuman/postcss-purgecss");
@@ -13,6 +13,28 @@ const favicon = glob.sync("src/favicon.*").sort((a, b) => (a < b) - (a > b))[0] 
 
 module.exports = (env, argv) => ({
     entry: "./src/main.js",
+
+    devServer: {
+        compress: true,
+        progress: true,
+        hot: true,
+        https: true,
+        open: true,
+        port: 8443,
+        stats: {
+            all: false,
+
+            errors: true,
+            warnings: true,
+            errorsCount: true,
+            warningsCount: true,
+            errorStack: true,
+
+            hash: true,
+            log: "warn",
+            builtAt: true
+        }
+    },
 
     output: {
         path: path.resolve("../web"),
@@ -121,13 +143,15 @@ module.exports = (env, argv) => ({
         new MiniCssExtractPlugin({
             filename: "[name].[chunkhash].css"
         })
-    ] : []),
+    ] : [
+        new HotModuleReplacementPlugin()
+    ]),
 
     optimization: {
         minimize: argv.mode === "production",
-        minimizer: [
-            new TerserPlugin()
-        ],
+
+        moduleIds: "deterministic",
+        chunkIds: "deterministic",
         splitChunks: {
             chunks: argv.mode === "production" ? "all" : "async"
         }

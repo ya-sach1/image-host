@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --mode=development --https --hot --progress",
+    "dev": "webpack serve --mode=development",
     "build": "webpack build --mode=production --progress"
   },
   "keywords": [],
@@ -27,7 +27,6 @@
     "postcss-loader": "^5.0.0",
     "style-loader": "^2.0.0",
     "tailwindcss": "^2.0.3",
-    "terser-webpack-plugin": "^5.1.1",
     "vue-loader": "^15.9.6",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.12",
@@ -40,5 +39,9 @@
     "regenerator-runtime": "^0.13.7",
     "vue": "^2.6.12",
     "vue-highlight.js": "^4.0.0-beta"
-  }
+  },
+  "browserslist": [
+    "supports es5 and not dead and last 16 versions",
+    ">= 0.25%"
+  ]
 }
