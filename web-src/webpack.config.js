@@ -40,9 +40,9 @@ module.exports = (env, argv) => ({
         path: path.resolve("../web"),
         clean: true,
 
-        filename: "[name].[chunkhash].js",
-        chunkFilename: "[id].[chunkhash].js",
-        assetModuleFilename: "[name].[chunkhash][ext]",
+        filename: "[name].[contenthash].js",
+        chunkFilename: "[id].[contenthash].js",
+        assetModuleFilename: "[name].[contenthash][ext]",
 
         hashDigestLength: 12,
         hashFunction: "sha256"
@@ -141,7 +141,7 @@ module.exports = (env, argv) => ({
     ]).concat(argv.mode === "production" ? [
         new PreloadPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].[chunkhash].css"
+            filename: "[name].[contenthash].css"
         })
     ] : [
         new HotModuleReplacementPlugin()
