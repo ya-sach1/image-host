@@ -225,4 +225,18 @@ body {
 .failure {
     @apply text-red-400;
 }
+
+.discord {
+    @apply bg-discord-bg-light dark:bg-discord-bg-dark text-discord-text-light dark:text-discord-text-dark;
+}
+
+.discord-muted {
+    @apply text-discord-muted-light dark:text-discord-muted-dark;
+}
+
+.discord-link {
+    @apply text-discord-link hover:underline break-words;
+}
 /* purgecss end ignore */
+
+/* purgecss is so broken. */

@@ -6,9 +6,11 @@
       <input type="text" v-model="apiKey" placeholder="API Key" :class="apiKey ? '' : 'bad'"
              @keydown.space.prevent="" class="input w-full">
     </p>
+
     <p v-if="apiKey && allDomainsNotClicked && allDomainsData.length !== 0" class="my-4 input-holder">
       <input type="button" @click="allDomainsClick" value="Use All Domains" class="button">
     </p>
+
     <p v-if="apiKey" v-for="(domain, index) of domains" class="fill my-4 input-holder">
       <input ref="domains" type="text" v-model="domain.value" placeholder="Domain"
              @keydown.enter.passive="domainKeypress" :class="domain.value ? 'fill-priority' : 'bad fill-priority'"
@@ -16,74 +18,93 @@
       <input type="button" value="Add" @click="addDomainClick" class="button">
       <input v-if="!domain.required" type="button" value="Remove" @click="removeDomainClick" :data-index="index" class="button">
     </p>
+
     <p v-if="domains[0].value && apiKey" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="encryption" style="margin-top: 3vh;" class="checkbox">Encryption
       </label>
     </p>
+
     <p v-if="encryption" class="my-4 input-holder">
       <input type="text" v-model="encKey" placeholder="Key / Key Length" @keydown="keyLengthKeypress"
              @keydown.space.prevent="" class="input">
     </p>
+
     <p v-if="domains[0].value && apiKey" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="embed" style="margin-top: 3vh;" class="checkbox">Embed
       </label>
     </p>
+
     <p v-if="embed" class="my-4 input-holder">
       <label class="label">
         <input type="color" v-model="embedColor">Embed Color
       </label>
     </p>
+
     <p v-if="embed" class="my-4 input-holder">
       <input type="text" placeholder="Embed Text" v-model="embedText" @keydown="embedTextKeydown" class="input">
     </p>
+
     <p v-if="embed" class="my-4 input-holder">
       <input type="text" placeholder="Timezone" v-model="embedTimezone" @keydown="embedTimezoneKeydown" class="input">
     </p>
+
     <p v-if="embed" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="embedMDY" style="margin-top: 3vh;" class="checkbox">M/D/Y Format
       </label>
     </p>
+
     <p v-if="domains[0].value && enableExpire && apiKey" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="expire" style="margin-top: 3vh;" class="checkbox">Expire
       </label>
     </p>
+
     <p v-if="expire" class="my-4 input-holder">
       <input type="text" v-model="expireUses" placeholder="Uses before expire" :class="(!expireAfter && !expireUses) ? 'bad' : ''" @keydown="expireUsesKeydown" class="input">
     </p>
+
     <p v-if="expire" class="my-4 input-holder">
       <input type="text" v-model="expireAfter" placeholder="MS before expire" :class="(!expireAfter && !expireUses) ? 'bad' : ''" @keydown="expireAfterKeydown" class="input">
     </p>
+
     <p v-if="domains[0].value && apiKey" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="showLink" style="margin-top: 3vh;" class="checkbox">Show Link on Discord
       </label>
     </p>
+
     <p v-if="showLink" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="compatSLoD" style="margin-top: 3vh;" class="checkbox">Compatibility SLoD
       </label>
     </p>
+
     <p v-if="domains[0].value && apiKey && !showLink && allDomainsData.length !== 0" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="spoilerGlitch" style="margin-top: 3vh;" class="checkbox">Spoiler Glitch
       </label>
     </p>
+
     <p v-if="spoilerGlitch" class="my-4 input-holder">
       <label class="label">
         <input type="checkbox" v-model="spoilerShowFilename" style="margin-top: 3vh;" class="checkbox">Show File Name
       </label>
     </p>
+
     <p v-if="domains[0].value && apiKey" class="my-4 input-holder">
       <input type="text" v-model="nameLength" @keydown="nameLengthKeypress" placeholder="Name Length" :class="nameLengthBad ? 'bad' : ''"
              @keydown.space.prevent="" class="input">
     </p>
-    <highlight-code lang="json" class="w-full">
+
+    <highlight-code lang="json" class="w-full select-text">
       {{json}}
     </highlight-code>
+
+    <Preview v-bind="$data" class="my-12" />
+
     <p class="input-holder my-4">
       <input type="button" @click="downloadClick" class="button" value="Download">
     </p>
@@ -91,6 +112,8 @@
 </template>
 
 <script>
+import Preview from "./Preview.vue";
+
 const config = require("./config");
 
 function download(data, name) {
@@ -102,8 +125,11 @@ function download(data, name) {
   URL.revokeObjectURL(url);
 }
 
-module.exports = {
+export default {
   name: "App",
+
+  components: {Preview},
+
   data: () => ({
     apiKey: "",
     domains: [{
@@ -220,7 +246,6 @@ module.exports = {
   },
 
   computed: {
-
     config() {
       let obj = {
         Version: "13.1.0",

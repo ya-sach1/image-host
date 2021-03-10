@@ -78,7 +78,10 @@ module.exports = (env, argv) => ({
                                         ],
                                         css: [
                                             "./src/**/*.css"
-                                        ]
+                                        ],
+                                        variables: true,
+                                        defaultExtractor:
+                                            content => content.match(/[A-Za-z0-9\-:\/]+/g)
                                     }),
                                     "cssnano"
                                 ] : [])
