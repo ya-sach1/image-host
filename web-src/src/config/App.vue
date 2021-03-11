@@ -263,8 +263,8 @@ export default {
         obj.Parameters.random = this.domains.map(d => d.value).join(",");
       } else domain = this.domains[0].value;
       if (domain) {
-        obj.RequestURL = `${location.protocol}//${this.domains[0].value}/upload`;
-        obj.DeletionURL = `${location.protocol}//${domain}/delete/$json:deletionKey$/$json:name$`;
+        obj.RequestURL = `${location.protocol}//${this.spoilerGlitch ? this.allDomainsData[0] : this.domains[0].value}/upload`;
+        obj.DeletionURL = `${location.protocol}//${this.spoilerGlitch ? this.allDomainsData[0] : domain}/delete/$json:deletionKey$/$json:name$`;
         obj.URL = this.url;
       }
       if (this.encryption) {
