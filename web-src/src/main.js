@@ -12,7 +12,7 @@ const normalizedPath = location.pathname.endsWith("/") ? location.pathname.slice
 
 if (normalizedPath === "") {
     const imagesList = [Astolfo, Arikawa, Felix, Hideri, Saika, Shimakaze];
-    document.getElementsByClassName('responsive-images')[0].querySelector('img').setAttribute("src", imagesList[Math.floor(Math.random() * imagesList.length)])
+    document.getElementById("femboy-image").setAttribute("src", imagesList[Math.floor(Math.random() * imagesList.length)])
 }
 
 if (normalizedPath === "/domains") {

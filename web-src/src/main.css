@@ -16,7 +16,7 @@ body {
     }
 }
 
-.responsive-images img {
+#femboy-image {
     max-height: 50vh;
     @apply pt-5 md:max-h-3/4 md:px-2;
 }
