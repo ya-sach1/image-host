@@ -22,6 +22,9 @@ module.exports = {
         fontFamily: {
             sans: ["Poppins", "sans-serif"],
             serif: ["Palatino Linotype", "serif"]
+        },
+        maxHeight: {
+            '3/4': '75vh',
         }
     },
     darkMode: "media"

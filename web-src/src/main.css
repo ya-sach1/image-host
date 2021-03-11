@@ -16,12 +16,12 @@ body {
     }
 }
 
-.responsive-image img {
+.responsive-images img {
     max-height: 50vh;
-    @apply md:max-h-screen
+    @apply pt-5 md:max-h-3/4 md:px-2;
 }
 
-.subtitle {
+.sub-dyn {
     @apply text-3xl md:text-5xl;
 }
 

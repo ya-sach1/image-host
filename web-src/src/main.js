@@ -1,8 +1,6 @@
 import "./main.css";
 import "regenerator-runtime/runtime";
 
-const normalizedPath = location.pathname.endsWith("/") ? location.pathname.slice(0, -1) : location.pathname;
-
 import Astolfo from './assets/Astolfo.png';
 import Arikawa from './assets/Arikawa.png';
 import Felix from './assets/Felix.png';
@@ -10,15 +8,17 @@ import Hideri from './assets/Hideri.png';
 import Saika  from './assets/Saika.png';
 import Shimakaze from './assets/Shimakaze.png';
 
+const normalizedPath = location.pathname.endsWith("/") ? location.pathname.slice(0, -1) : location.pathname;
+
 if (normalizedPath === "") {
     const imagesList = [Astolfo, Arikawa, Felix, Hideri, Saika, Shimakaze];
-    document.getElementsByClassName("rand-imag")[0].setAttribute("src", imagesList[Math.floor(Math.random() * imagesList.length)]);
+    document.getElementsByClassName('responsive-images')[0].querySelector('img').setAttribute("src", imagesList[Math.floor(Math.random() * imagesList.length)])
 }
 
 if (normalizedPath === "/domains") {
     let domains = fetch("/api/domains").then(r => r.json());
 
-    window.onload = async function () {
+    window.onload = async function() {
         const domainContainer = document.getElementById("domain-container");
         for (const domain of await domains) {
             const a = document.createElement("a");
@@ -35,7 +35,7 @@ if (normalizedPath === "/domains") {
 }
 
 if (normalizedPath === "/login") {
-    document.getElementById("key-input").addEventListener("keydown", function (e) {
+    document.getElementById("key-input").addEventListener("keydown", function(e) {
         if ((e.key || e.code) === "Enter" || (e.keyCode || e.which) === 13) {
             location.href = "/login/" + e.currentTarget.value.split("/").join("");
         }
@@ -43,7 +43,7 @@ if (normalizedPath === "/login") {
 }
 
 if (normalizedPath === "/subdomain/ui") {
-    document.getElementById("subdomain-add-button").addEventListener("click", function () {
+    document.getElementById("subdomain-add-button").addEventListener("click", function() {
         location.href = "/subdomain/add?" + new URLSearchParams({
             subdomain: document.getElementById("subdomain-input").value,
             key: document.getElementById("subdomain-key-input").value
